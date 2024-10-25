@@ -54,13 +54,13 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: true  # 开启相同文章的资源文件，new的时候会自动创建
+post_asset_folder: false  # 开启相同文章的资源文件，new的时候会自动创建
 relative_link: false
 future: true
 syntax_highlighter: highlight.js
 highlight:
   line_number: true
-  auto_detect: false
+  auto_detect: true
   tab_replace: ''
   wrap: true
   hljs: false

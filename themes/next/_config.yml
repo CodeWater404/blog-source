@@ -398,7 +398,7 @@ codeblock:
     # Show text copy result.
     show_result: true
     # Available values: default | flat | mac
-    style:
+    style: mac
 
 back2top:
   enable: true
@@ -947,7 +947,7 @@ vendors:
   # FancyBox
   # jquery: //cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js
   # fancybox: //cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jqueE3/dist/jquery.fancybox.min.css
-  jquery:
+  jquery: //cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js
   fancybox:       # 设置了没用# //cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js
   fancybox_css:   # //cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css
 
