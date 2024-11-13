@@ -120,7 +120,7 @@ deploy:
   # type: baidu_url_submitter
   repository: git@github.com:CodeWater404/codewater404.github.io.git
   branch: master
-  name: CodeWater4
+  name: CodeWater404
   email: dylanrieder@163.com
 
 # 站点地图
