@@ -68,6 +68,9 @@ llm keys set deepseek
 # 这里deepseek是你第一步输入的名称
 llm models default deepseek
 ```
+> 2025年02月06日 更新：如果这一步报错，Error: Unknown model: deepseek。
+> 那么可以先执行下一步操作，然后再设置这一步的默认模型。
+
 1. 配置请求`deepseek api`：
      * `dirname "$(llm logs path)"`，会输出llm的配置路径
      * 在这个路径下新建一个`extra-openai-models.yaml`文件，添加如下内容:
