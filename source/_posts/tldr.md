@@ -43,7 +43,7 @@ tldr
 
 	`tldr`命令只会显示一些常用命令的使用示例，相当与一个笔记。
 
-
+---
 
 # 安装
 
@@ -56,7 +56,7 @@ tldr
 
 [参考](https://developer.aliyun.com/article/1395256)
 
-
+---
 
 # 运行
 
@@ -93,7 +93,7 @@ Information about running processes.More information: https://manned.org/ps.
 ```
 
 
-
+---
 
 
 # 常见问题
@@ -104,10 +104,24 @@ Information about running processes.More information: https://manned.org/ps.
 
 这个问题是由于没有更新`tldr`的数据库，所以找不到的对应案例，解决也很简单：
 
-1. linux下执行：`tldr –update`
+1. linux下执行：`tldr –-update`
 2. windows下执行：`tldr update`
 
+> 2025年03月24日 更新：
 
+在新的服务器上新安装tldr，然后执行`tldr --update`,又有新的报错：
+```shell
+ubuntu@VM-20-17-ubuntu:~$ tldr --update
+tldr: /home/ubuntu/.local/share/tldr: createDirectory: does not exist (No such file or directory)
+```
+谷歌之后，发现只需要创建一下目录即可：
+```shell
+mkdir -p ~/.local/share
+```
+
+[参考](https://forum.proxmox.com/threads/tldr-doesnt-work.116520/)
+
+---
 
 ## windows下执行tldr，显示没有此命令
 
@@ -120,7 +134,8 @@ Information about running processes.More information: https://manned.org/ps.
 
 > 如果不会添加环境变量，可以自行谷歌。
 >
-> 其实，个人建议：终极方案还是自己维护一个手册记录一下，下次要用到的时候打开手册搜索一下。这个的话省了打开手册这一步，相对快捷一点，但是如果没有找到自己想要的命令的时候，手册里面好像有影响就优先去看自己的手册，最后不行再谷歌。
+> 其实，个人建议：终极方案还是自己维护一个手册记录一下，下次要用到的时候打开手册搜索一下。
+> 这个的话省了打开手册这一步，相对快捷一点，但是如果在tldr中没有找到自己想要的命令的时候，手册里面有印象就优先去看自己的手册，最后不行再谷歌。
 
 
 
