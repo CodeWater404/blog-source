@@ -17,14 +17,31 @@
 - 章节标题要传递信息（不用"简介""背景""总结"这类空标题）
 - 工具类文章的章节标题带上该工具的官网链接
 
-## Step 3：用 technical-blog-writing、blog-writing-guide 和 seo-content-writer skill 优化
+## Step 3：用 technical-blog-writing、blog-writing-guide、seo-content-writer 和 content-quality-auditor skill 优化
 
 依次调用：
 1. `technical-blog-writing` skill：对照技术博客写作标准整体检查，包括代码示例是否可运行、技术表述是否准确
 2. `blog-writing-guide` skill：检查开头是否直接切入、标题是否传递信息、有无 AI 写作套话（平行结构广告体、格言体等）
 3. `seo-content-writer` skill：检查 description 字段、H2 关键词覆盖
+4. `content-quality-auditor` skill：综合内容质量把关，检查结构完整性、可读性、事实声明是否有据可查
 
 发现问题直接修改，不要列出问题清单再问我要不要改。
+
+## Step 3.5：准确性与时效性核查
+
+对文章中所有具体的技术声明进行核查，确保内容准确、不过时：
+
+**需要核查的内容**（逐条检查，有疑问就用 WebSearch 或 defuddle skill 查官方文档）：
+- 版本号：文中提到的工具/库版本是否仍是当前版本或主流版本
+- 命令和参数：命令语法是否和官方文档一致，参数是否仍然有效
+- API / 配置字段：接口和配置项是否已变更或废弃
+- 安装方式：brew、npm、curl 等安装命令是否仍然适用
+- 外部链接：引用的官方文档地址是否有效
+
+**处理原则**：
+- 核实无误 → 不改动
+- 发现过时或有误 → 直接修正，在 Step 4 的总结里注明改了什么
+- 无法核实（无网络或文档找不到）→ 在内容里加注"建议以官方文档为准"或标注版本适用范围
 
 ## Step 4：停止，等待审核
 
