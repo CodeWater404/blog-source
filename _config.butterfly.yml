@@ -15,7 +15,6 @@ menu:
   标签: /tags/ || fas fa-tags
   分类: /categories/ || fas fa-folder-open
   资源: /resources/ || fas fa-download
-  搜索: /search/ || fas fa-search
   关于: /about/ || fas fa-user
 
 # 顶部 banner 图
@@ -119,11 +118,16 @@ toc:
   style_simple: false
   scroll_percent: true
 
-# 本地搜索（已安装 hexo-generator-search）
-local_search:
-  enable: true
-  preload: false
-  CDN:
+# 搜索
+search:
+  use: local_search
+  placeholder:
+
+  local_search:
+    preload: false
+    top_n_per_article: 1
+    unescape: false
+    CDN:
 
 # 文章字数统计（已安装 hexo-wordcount）
 wordcount:
