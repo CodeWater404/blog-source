@@ -1,6 +1,7 @@
 ---
 title: codewater first post hexo
 date: 2024-02-15 22:25:33
+cover: /img/p08.jpg
 categories: test
 tags:
 ---

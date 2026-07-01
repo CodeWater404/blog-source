@@ -1,6 +1,7 @@
 ---
 title: "git tag 常用命令与使用场景"
 date: 2026-06-30 10:00:00
+cover: /img/p10.jpg
 categories: tools
 tags:
   - git

@@ -1,6 +1,7 @@
 ---
 title: "Go 后端实现 Google 一键登录（ID Token 验证方案）"
 date: 2025-06-27 16:30:00
+cover: /img/p04.jpg
 categories: golang
 tags:
   - Google OAuth

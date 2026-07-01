@@ -1,6 +1,7 @@
 ---
 title: "yazi：终端里的三栏文件管理器"
 date: 2026-07-01 14:00:00
+cover: /img/p15.jpg
 categories: tools
 tags:
   - Mac

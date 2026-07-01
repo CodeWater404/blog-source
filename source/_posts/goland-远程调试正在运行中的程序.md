@@ -1,6 +1,7 @@
 ---
 title: 'goland: 远程调试正在运行中的程序'
 date: 2024-10-29 10:45:57
+cover: /img/p11.jpg
 categories: golang
 tags:
  - goland

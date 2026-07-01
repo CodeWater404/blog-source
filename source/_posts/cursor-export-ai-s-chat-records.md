@@ -1,6 +1,7 @@
 ---
 title: 'cursor: 导出聊天会话记录'
 date: 2024-12-31 17:21:26
+cover: /img/p09.jpg
 categories: cursor
 tags:
   - chat聊天记录导出

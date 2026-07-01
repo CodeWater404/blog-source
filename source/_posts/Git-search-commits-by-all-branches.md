@@ -1,6 +1,7 @@
 ---
 title: 'Git: 跨分支搜索提交记录commits'
 date: 2025-01-07 14:17:32
+cover: /img/p01.jpg
 categories: git
 tags:
   - log

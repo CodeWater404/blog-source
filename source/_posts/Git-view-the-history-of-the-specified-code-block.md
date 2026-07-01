@@ -1,6 +1,7 @@
 ---
 title: 'Git: 查看指定代码块的历史记录'
 date: 2025-01-02 11:08:50
+cover: /img/p03.jpg
 categories: git
 tags:
   - log

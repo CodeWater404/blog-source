@@ -1,0 +1,234 @@
+# ==============================
+# Butterfly 主题配置
+# ==============================
+
+# 导航栏
+nav:
+  logo:
+  display_title: true
+  fixed: false
+
+# 导航菜单（右上角按钮）
+menu:
+  首页: / || fas fa-home
+  归档: /archives/ || fas fa-archive
+  标签: /tags/ || fas fa-tags
+  分类: /categories/ || fas fa-folder-open
+  资源: /resources/ || fas fa-download
+  搜索: /search/ || fas fa-search
+  关于: /about/ || fas fa-user
+
+# 顶部 banner 图
+index_img: /img/banner.jpg
+
+# 文章封面配置
+cover:
+  index_enable: true
+  aside_enable: true
+  archives_enable: true
+  default_cover:
+    - /img/cover1.jpg
+    - /img/cover2.jpg
+    - /img/cover3.jpg
+    - /img/cover4.jpg
+    - /img/cover5.jpg
+    - /img/cover6.jpg
+    - /img/cover7.jpg
+    - /img/cover8.jpg
+
+# 页面（标签/分类/归档）和文章页默认顶部图（未在 frontmatter 设置时使用）
+default_top_img: /img/banner.jpg
+
+# 页脚
+footer:
+  owner:
+    enable: true
+    since: 2023
+  custom_text:
+  copyright: true
+
+# 侧边栏
+aside:
+  enable: true
+  hide: false
+  button: true
+  mobile: true
+  position: right
+  display:
+    archive: true
+    tag: true
+    category: true
+  card_author:
+    enable: true
+    description: Talk is cheap, show me the code!
+    button:
+      enable: true
+      icon: fab fa-github
+      text: GitHub
+      link: https://github.com/CodeWater404
+  card_announcement:
+    enable: false
+  card_recent_post:
+    enable: true
+    limit: 5
+    sort: date
+    sort_order:
+  card_categories:
+    enable: true
+    limit: 8
+    expand: none
+    sort_order:
+  card_tags:
+    enable: true
+    limit: 40
+    color: false
+    sort_order:
+  card_archives:
+    enable: true
+    type: monthly
+    format: MMMM YYYY
+    order: -1
+    limit: 8
+    sort_order:
+  card_webinfo:
+    enable: true
+    post_count: true
+    last_push_date: true
+    sort_order:
+
+# 社交链接（显示在侧边栏作者卡片下方）
+social:
+  fab fa-github: https://github.com/CodeWater404 || GitHub
+  fas fa-envelope: mailto:dylanrieder@163.com || Email
+
+# 代码块
+highlight_theme: mac
+highlight_copy: true
+highlight_lang: true
+highlight_shrink: false
+highlight_height_limit: false
+code_word_wrap: false
+
+# 目录（文章页右侧）
+toc:
+  post: true
+  page: false
+  number: true
+  expand: true
+  style_simple: false
+  scroll_percent: true
+
+# 本地搜索（已安装 hexo-generator-search）
+local_search:
+  enable: true
+  preload: false
+  CDN:
+
+# 文章字数统计（已安装 hexo-wordcount）
+wordcount:
+  enable: true
+  post_wordcount: true
+  min2read: true
+  total_wordcount: true
+
+# 图片查看（点击放大）
+medium_zoom: false
+fancybox: true
+
+# 回到顶部按钮
+rightside_scroll_percent: true
+
+# 首页文章显示摘要
+index_post_content:
+  method: 2  # 1=description字段，2=<!-- more -->前的内容
+  length: 500
+
+# 加载动画
+preloader:
+  enable: false
+
+# 背景特效
+canvas_ribbon:
+  enable: true
+  size: 150
+  alpha: 0.8
+  zIndex: -1
+  click_to_change: true
+  mobile: true
+
+canvas_fluttering_ribbon:
+  enable: true
+  mobile: true
+
+canvas_nest:
+  enable: true
+  color: '0,149,255'
+  opacity: 0.8
+  zIndex: -1
+  count: 150
+  mobile: true
+
+fireworks:
+  enable: true
+  zIndex: 9999
+  mobile: true
+
+# 打字机效果（副标题）
+subtitle:
+  enable: true
+  effect: true
+  typed_option:
+  source: false
+  sub:
+    - 代码是我与世界对话的方式
+    - 每一次 commit 都算数
+    - 写代码，也写自己
+
+# 暗色模式
+display_mode: light
+dark_mode:
+  enable: true
+  button: true
+  auto:
+    enable: false
+
+# favicon
+favicon: /img/favicon.png
+
+# 头像
+avatar:
+  img: /img/avatar.png
+  effect: false
+
+# 版权声明
+post_copyright:
+  enable: true
+  decode: false
+  author_href:
+  license: CC BY-NC-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+# 文章推荐（相关文章）
+related_post:
+  enable: true
+  limit: 6
+  title: 相关文章
+  orderby: random
+  order: -1
+
+# 不蒜子访问统计
+busuanzi:
+  site_uv: true
+  site_pv: true
+  page_pv: true
+
+# 404页面
+error_404:
+  enable: true
+  subtitle: 页面不见了
+  background: /img/banner.jpg
+
+# 自定义样式
+inject:
+  head:
+    - <style>#footer{background:url('/img/banner.jpg') center bottom / cover no-repeat !important;background-color:transparent !important;}#footer::before{background:rgba(0,0,0,0.4) !important;}#recent-posts .recent-post-item .post-bg{transition:transform 0.5s ease !important;}#recent-posts .recent-post-item:hover .post-bg{transform:scale(1.05) !important;}#site-info h1#site-title{font-size:0 !important;}#site-info h1#site-title::after{content:"阿水的代码笔记";font-size:2.5rem;color:#fff;letter-spacing:.05em;font-weight:700;}</style>

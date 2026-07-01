@@ -1,6 +1,7 @@
 ---
 title: tldr：一款命令使用提示工具
 date: 2024-07-20 23:01:47
+cover: /img/p14.jpg
 categories: tools
 tags: 
 	- linux

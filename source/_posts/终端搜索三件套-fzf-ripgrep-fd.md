@@ -1,6 +1,7 @@
 ---
 title: "终端搜索三件套：fzf + ripgrep + fd，以及 jq"
 date: 2026-06-30 14:00:00
+cover: /img/p17.jpg
 categories: tools
 tags:
   - Mac

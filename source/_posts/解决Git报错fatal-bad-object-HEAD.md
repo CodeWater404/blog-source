@@ -1,6 +1,7 @@
 ---
 title: '解决Git报错fatal: bad object HEAD'
 date: 2024-10-24 20:13:02
+cover: /img/p18.jpg
 categories: problem
 tags:
  - git

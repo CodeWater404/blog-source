@@ -1,6 +1,7 @@
 ---
 title: cli中集成ai,以deepseek为例
 date: 2025-01-15 14:55:47
+cover: /img/p07.jpg
 categories: 
   - ai
   - deepseek

@@ -1,6 +1,7 @@
 ---
 title: "文件查看升级：bat + eza + glow + mdcat"
 date: 2026-07-01 10:00:00
+cover: /img/p16.jpg
 categories: tools
 tags:
   - Mac

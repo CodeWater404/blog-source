@@ -1,6 +1,7 @@
 ---
 title: 'Git: submodule常见操作用法'
 date: 2025-01-07 14:45:29
+cover: /img/p02.jpg
 categories: git
 tags:
   - submodule

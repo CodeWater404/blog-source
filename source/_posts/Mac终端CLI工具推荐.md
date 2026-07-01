@@ -1,6 +1,7 @@
 ---
 title: "Mac 终端 CLI 工具推荐：那些让命令行效率翻倍的家伙"
 date: 2026-06-28 10:00:00
+cover: /img/p05b.jpg
 categories: tools
 tags:
   - Mac

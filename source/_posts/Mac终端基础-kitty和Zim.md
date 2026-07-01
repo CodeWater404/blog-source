@@ -1,6 +1,7 @@
 ---
 title: "Mac 终端基础配置：kitty + Zim"
 date: 2026-06-30 10:00:00
+cover: /img/p06.jpg
 categories: tools
 tags:
   - Mac

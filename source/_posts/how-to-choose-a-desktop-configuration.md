@@ -1,6 +1,7 @@
 ---
 title: 如何选择一台适的台式机配置
 date: 2025-05-28 23:04:03
+cover: /img/p13.jpg
 updated: 2025-05-28 23:04:03
 categories:
 tags:

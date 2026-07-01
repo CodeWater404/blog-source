@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 共建代码世界，践行开源精神
+title: Code Water
 subtitle: '阿水'
 description: 'Talk is cheap , show me the code!'
 keywords:
@@ -110,7 +110,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next
+theme: butterfly
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
