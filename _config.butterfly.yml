@@ -99,6 +99,7 @@ aside:
 # 社交链接（显示在侧边栏作者卡片下方）
 social:
   fab fa-github: https://github.com/CodeWater404 || GitHub
+  fab fa-telegram: https://t.me/dylancody || Telegram
   fas fa-envelope: mailto:dylanrieder@163.com || Email
 
 # 代码块
