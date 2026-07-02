@@ -16,6 +16,54 @@
 
 <!-- 从这里开始记录 -->
 
+## 2026-07-02：Docker 实用教程
+
+**背景**
+
+Docker 入门教程到处有，但大多停留在"跑个 hello-world"。写一篇面向后端开发者的实用教程，聚焦真实开发场景：本地起服务、打镜像、多容器联调。
+
+**可以覆盖的场景**
+
+- 核心概念：镜像 vs 容器、层（layer）缓存、registry
+- 常用命令速查：`run`、`exec`、`ps`、`logs`、`stop`、`rm`、`build`、`pull`/`push`
+- Dockerfile 写法：FROM/RUN/COPY/ENV/EXPOSE/CMD 各指令含义，多阶段构建减小镜像体积
+- docker-compose：本地起 MySQL + Redis + 应用服务，volumes 持久化数据，网络互通
+- 实际场景：Go 应用打镜像（含 .dockerignore）、挂载本地目录热更新、查看容器内日志
+- 常见问题：容器里访问宿主机服务（`host.docker.internal`）、端口映射、镜像清理
+
+**博客可以展开的点**
+
+- 用"本地开发环境容器化"为主线串联所有命令，而不是逐命令罗列
+- docker-compose.yml 给一个完整可跑的例子（Go + MySQL + Redis）
+- 说明什么时候用 Docker，什么时候不用（开发机直装 vs 容器化的取舍）
+
+---
+
+## 2026-07-02：Git 日常操作手册
+
+**背景**
+
+Git 命令多而散，很多人只记住 add/commit/push 三板斧，遇到合并冲突、撤销提交、整理历史就慌了。写一篇覆盖真实工作场景的 Git 操作参考，不是命令大全，而是按场景组织。
+
+**可以覆盖的场景**
+
+- 撤销操作：`git restore`、`git reset`、`git revert` 的区别和适用场合
+- 暂存区操作：`git stash`（save/pop/list/apply）
+- 分支管理：创建、切换、合并、删除、重命名
+- 查看历史：`git log` 常用参数（`--oneline --graph --all`）、`git diff` 对比范围
+- 合并 vs rebase：使用场景对比，rebase 的黄金法则（不对已推送的分支 rebase）
+- 解决冲突：merge 冲突标记读法、工具辅助（git mergetool / lazygit）
+- 远程操作：fetch vs pull、强推的风险与替代方案
+- 实用小技巧：`git bisect` 二分查找问题提交、`git blame`、`git cherry-pick`
+
+**博客可以展开的点**
+
+- 每个场景配一个"踩过的坑"或"为什么这么做"的解释，不只列命令
+- 用图或 ASCII 图示说明 merge vs rebase 的提交线变化
+- 结合 lazygit / git-delta 这些工具提升体验
+
+---
+
 ## 2026-07-01：Go 接口设计——当参数不够用时怎么办
 
 **背景**
