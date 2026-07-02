@@ -137,8 +137,7 @@ wordcount:
   total_wordcount: true
 
 # 图片查看（点击放大）
-medium_zoom: false
-fancybox: true
+lightbox: fancybox
 
 # 回到顶部按钮
 rightside_scroll_percent: true
