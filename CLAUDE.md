@@ -56,6 +56,17 @@ Hexo 内部链接用 `/文件名`（不带 `.md` 扩展名），例如：
 hexo clean && hexo g -d
 ```
 
+## 封面图规则
+
+- 每篇文章的封面（frontmatter `cover` 字段）不能与其他文章重复
+- 写新文章前先用以下命令检查已用的封面：
+  ```bash
+  rg "^cover:" source/_posts/ --sort path
+  ```
+- 封面来源（二选一）：
+  - `/Users/baizhe/Pictures/wallpaper` 目录下的图片（未被其他文章使用的）
+  - 从 https://www.uhdpaper.com/?m=0 随机挑一张，下载后放入 `source/img/` 并命名为 `pXX.jpg`（XX 为下一个未使用的编号）
+
 ## 写作规范
 
 - 文章写到 `source/_posts/` 下，不使用 `_drafts`
