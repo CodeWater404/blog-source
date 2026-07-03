@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://blog.codewater.top/sitemap.xml
+Sitemap: https://blog.codewater.top/baidusitemap.xml

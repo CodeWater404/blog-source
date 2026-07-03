@@ -94,7 +94,7 @@ meta_generator: true
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
 ## updated_option supports 'mtime', 'date', 'empty'
-updated_option: 'mtime'
+updated_option: 'date'
 
 # Pagination
 ## Set per_page to 0 to disable pagination
@@ -128,6 +128,14 @@ sitemap:
   path: sitemap.xml
 baidusitemap:
   path: baidusitemap.xml
+
+# RSS 订阅
+feed:
+  enable: true
+  type: atom
+  path: atom.xml
+  limit: 20
+  content: true
 
 # 百度主动推送
 baidu_url_submit:
