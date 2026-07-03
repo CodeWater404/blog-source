@@ -17,6 +17,12 @@ awk 'NR==FNR{used[$1]=1;next} !used[$1]{print $2}' /tmp/covers.txt /tmp/wallpape
 
 从输出的文件列表里选一张，复制到 `source/img/` 并命名为 `pXX.jpg`（XX 为当前最大编号 +1）。
 
+复制完成后立即压缩，控制体积：
+
+```bash
+sips -s format jpeg -s formatOptions 80 -Z 1920 source/img/pXX.jpg
+```
+
 ## Step 1：用 writing-plans skill 制定写作计划
 
 调用 `superpowers:writing-plans` skill，为这篇文章制定结构计划：
