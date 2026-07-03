@@ -5,8 +5,8 @@
 在选封面之前，先运行以下命令找出 wallpaper 目录里还没被用过的图片：
 
 ```bash
-# 1. 生成已用封面的哈希列表
-md5 source/img/p*.jpg | sed 's/MD5 (\(.*\)) = \(.*\)/\2 \1/' > /tmp/covers.txt
+# 1. 生成已用图片的哈希列表（含 banner.jpg，避免和首页主题图重复）
+md5 source/img/banner.jpg source/img/p*.jpg | sed 's/MD5 (\(.*\)) = \(.*\)/\2 \1/' > /tmp/covers.txt
 
 # 2. 生成 wallpaper 目录的哈希列表
 md5 ~/Pictures/wallpaper/*.jpg | sed 's/MD5 (\(.*\)) = \(.*\)/\2 \1/' > /tmp/wallpapers.txt
