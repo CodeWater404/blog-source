@@ -1,5 +1,22 @@
 写一篇关于「$ARGUMENTS」的博客文章。按以下步骤执行，每步完成后继续下一步，**不要在中间停下来询问**，直到第 4 步才停止等待审核。
 
+## Step 0：封面去重检查
+
+在选封面之前，先运行以下命令找出 wallpaper 目录里还没被用过的图片：
+
+```bash
+# 1. 生成已用封面的哈希列表
+md5 source/img/p*.jpg | sed 's/MD5 (\(.*\)) = \(.*\)/\2 \1/' > /tmp/covers.txt
+
+# 2. 生成 wallpaper 目录的哈希列表
+md5 ~/Pictures/wallpaper/*.jpg | sed 's/MD5 (\(.*\)) = \(.*\)/\2 \1/' > /tmp/wallpapers.txt
+
+# 3. 输出还没被用过的 wallpaper 文件路径
+awk 'NR==FNR{used[$1]=1;next} !used[$1]{print $2}' /tmp/covers.txt /tmp/wallpapers.txt
+```
+
+从输出的文件列表里选一张，复制到 `source/img/` 并命名为 `pXX.jpg`（XX 为当前最大编号 +1）。
+
 ## Step 1：用 writing-plans skill 制定写作计划
 
 调用 `superpowers:writing-plans` skill，为这篇文章制定结构计划：

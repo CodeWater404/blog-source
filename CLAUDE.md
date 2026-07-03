@@ -59,10 +59,7 @@ hexo clean && hexo g -d
 ## 封面图规则
 
 - 每篇文章的封面（frontmatter `cover` 字段）不能与其他文章重复
-- 写新文章前先用以下命令检查已用的封面：
-  ```bash
-  rg "^cover:" source/_posts/ --sort path
-  ```
+- 重复判断以文件内容（MD5 哈希）为准，不依赖文件名
 - 封面来源（二选一）：
   - `/Users/baizhe/Pictures/wallpaper` 目录下的图片（未被其他文章使用的）
   - 从 https://www.uhdpaper.com/?m=0 随机挑一张，下载后放入 `source/img/` 并命名为 `pXX.jpg`（XX 为下一个未使用的编号）
