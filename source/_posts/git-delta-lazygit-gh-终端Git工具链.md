@@ -1,7 +1,7 @@
 ---
 title: "终端里的 Git：git-delta + lazygit + gh"
 date: 2026-07-03 14:00:00
-cover: /img/p06.jpg
+cover: /img/p19.jpg
 categories: tools
 tags:
   - Mac
