@@ -77,3 +77,10 @@ hexo clean && hexo g -d
   #      -a：annotated，创建附注标签
   #      -m：message，标签说明，省略会弹出编辑器
   ```
+
+- 工具类文章中每个工具章节必须先用 1-2 句话介绍该工具是什么、默认行为是什么；如果一个章节同时介绍多个工具（如 ss / lsof），还需说明两者的区别和各自适用场景，不能直接上命令
+- 修改已有文章内容时，必须在 frontmatter 里加上或更新 `updated` 字段，格式：
+  ```yaml
+  date: YYYY-MM-DD HH:MM:SS      # 原始发布时间，不动
+  updated: YYYY-MM-DD HH:MM:SS   # 本次修改日期
+  ```
