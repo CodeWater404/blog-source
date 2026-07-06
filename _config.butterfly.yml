@@ -110,6 +110,14 @@ highlight_shrink: false
 highlight_height_limit: false
 code_word_wrap: false
 
+# Mermaid 图表（code_write: true 表示直接渲染 ```mermaid 围栏代码块）
+mermaid:
+  enable: true
+  code_write: true
+  theme:
+    light: default
+    dark: dark
+
 # 目录（文章页右侧）
 toc:
   post: true

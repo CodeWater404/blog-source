@@ -64,6 +64,8 @@ highlight:
   tab_replace: ''
   wrap: true
   hljs: false
+  exclude_languages:
+    - mermaid   # mermaid 代码块不做语法高亮，交给主题渲染成图表
 prismjs:
   preprocess: true
   line_number: true
