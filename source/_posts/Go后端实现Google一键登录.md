@@ -1,6 +1,7 @@
 ---
 title: "Go 后端实现 Google 一键登录（ID Token 验证方案）"
 date: 2025-06-27 16:30:00
+updated: 2026-07-07 15:00:00
 cover: /img/p04.jpg
 categories: golang
 tags:
@@ -23,10 +24,11 @@ description: "用 GoFrame 实现 Google 一键登录的后端方案——ID Toke
 
 Google 一键登录的核心流程其实很简单：
 
-{% mermaid sequenceDiagram %}
-participant U as 用户(浏览器)
-participant G as Google
-participant B as 后端
+```mermaid
+sequenceDiagram
+    participant U as 用户(浏览器)
+    participant G as Google
+    participant B as 后端
 
     U->>G: 1. 点击 Google 登录按钮，弹出授权窗口
     G->>G: 2. 用户在 Google 页面完成身份验证
@@ -37,8 +39,7 @@ participant B as 后端
     B->>B: 7. 用公钥本地验证 ID Token 签名和有效期
     B->>B: 8. 根据 googleID 查找/创建用户，签发 JWT
     B->>U: 9. 返回 JWT + 用户信息
-
-{% endmermaid %}
+```
 
 后端要做的事只有三件：
 
