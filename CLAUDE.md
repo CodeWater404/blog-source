@@ -85,3 +85,4 @@ hexo clean && hexo g -d
   date: YYYY-MM-DD HH:MM:SS      # 原始发布时间，不动
   updated: YYYY-MM-DD HH:MM:SS   # 本次修改日期
   ```
+- 文章中的代码示例优先用 Go 编写；只有在 Go 不适合（如前端、脚本场景）时才选其他语言
