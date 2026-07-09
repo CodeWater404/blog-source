@@ -30,6 +30,8 @@ sips -s format jpeg -s formatOptions 80 -Z 1920 source/img/pXX.jpg
 - 列出主要章节和每节要覆盖的核心内容
 - 确认读者定位和文章长度预估
 
+**计划文件写到用户级计划目录 `~/.claude/plans/`（文件名格式 `YYYY-MM-DD-文章主题.md`），不要写进仓库**——那里本来就是存放计划的地方，写完也无需清理。
+
 ## Step 2：写作
 
 按照计划写出完整文章，遵守以下约定：
