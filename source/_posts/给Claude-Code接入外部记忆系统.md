@@ -1,12 +1,13 @@
 ---
 title: "给 Claude Code 接入外部记忆系统：新会话不再失忆"
 date: 2026-07-09 15:00:00
+updated: 2026-07-10 11:00:00
 cover: /img/p29.jpg
 categories: tutorial
 tags:
   - Claude Code
   - MCP
-  - mem0
+  - memory
   - Claude
   - AI
 description: "三种方案让 Claude Code 跨会话保留项目记忆：官方 memory server 本地知识图谱、mem0 云端托管与自托管，附 CLAUDE.md 记忆协议模板。"
@@ -193,3 +194,40 @@ make up
 - 记忆协议本质上是一种 prompt 工程，配合 [Claude Code 的 hooks](/ClaudeCode实战教程-安装CLAUDEmd-hooks-subagent) 可以做得更硬：用 SessionStart hook 强制在会话开始注入检索结果，不依赖 Claude 自觉
 - 官方 memory server 只是参考实现，读完[自建 MCP Server](/自建MCP-server接入Claude) 你完全可以针对团队需求写一个自己的记忆 server——比如把存储后端换成团队已有的 PostgreSQL
 - 想给记忆系统加「定期整理」能力（合并重复、清理过期），可以封装成一个 [Claude Skill](/从0到1写一个Claude-Skill-规范写法与实战)
+
+## 两个更野的思路：把 GitHub Issues 和 Obsidian 当记忆后端
+
+> 这几天刷推特，看到有些推友的方案，这里记录一下。
+
+前面三个方案的共同点是「MCP server 暴露读写工具 + 协议」，存储后端不一定非得是专门的记忆产品——只要能读写、能查询，任何你已经在用的系统都能顶上。这两个思路都有真实可用的工具支撑，评估下来都站得住脚。
+
+### 用 GitHub Issues 存记忆
+
+思路：一个 issue 对应一条记忆，标题是主题，正文是初始内容，后续更新靠评论追加，label 做分类，关闭表示这条记忆已过期归档。
+
+不需要自己写 MCP server——GitHub 官方就维护着 [github-mcp-server](https://github.com/github/github-mcp-server)，里面的 `create_issue`、`search_issues`、`add_issue_comment`、`list_issues` 这几个工具直接挪用来当记忆读写：新记忆调 `create_issue`，追加事实调 `add_issue_comment`，检索调 `search_issues`（支持 GitHub 原生搜索语法，按 label、关键词过滤）。CLAUDE.md 里加一份协议就行：
+
+```markdown
+## 记忆协议（GitHub Issues 版）
+记忆存在 <你的用户名>/claude-memory 仓库的 issue 里，label 统一打 memory。
+检索：先用 search_issues 按关键词 + label:memory 查。
+写入：新事实开新 issue；对已有记忆的补充用 add_issue_comment 追加，不要新开重复 issue。
+```
+
+优点很实在：零基础设施（不用自己起 server、不用管数据库），自带 Web UI 能点进去看、编辑、关闭，天然支持团队协作——同事能在 issue 下评论纠正记忆，PR 里 `#123` 直接引用某条记忆。
+
+代价也要认清：检索是 GitHub 的关键词搜索，不是语义检索，效果和官方 memory server 的图谱匹配是一个量级，比 mem0 弱；仓库必须建成私有的，不然内部架构细节挂在公开 issue 里就是裸奔；GitHub API 有速率限制（认证用户每小时 5000 次），个人用绰绰有余，但别拿它当高频轮询的数据库使。
+
+### 用 Obsidian 存记忆
+
+思路更直接：记忆就是 Obsidian vault 里一篇篇 Markdown 笔记，本质和方案一的本地 JSONL 是同一件事——都是本地文件——只是换成了人读起来更友好的格式：一条记忆一个文件，用 `[[双链]]` 互相引用，Obsidian 自带的关系图谱能可视化记忆之间的关联，这是纯 JSONL 天生没有的。
+
+社区方案是 [mcp-obsidian](https://github.com/MarkusPfundstein/mcp-obsidian)：先在 Obsidian 里装 [Local REST API](https://github.com/coddingtonbear/obsidian-local-rest-api) 这个社区插件（起一个本地 HTTPS 接口），再跑 `uvx mcp-obsidian` 把这个接口包装成 MCP tools——`get_file_contents`、`append_content`、`search` 这几个是记忆场景最常用的。CLAUDE.md 里同样写一份协议，告诉 Claude 记忆笔记放在 vault 的哪个子目录、用什么样的文件名和 frontmatter 格式。
+
+它相比前面三个方案最大的差异点：**vault 不用绑定单个项目**。可以让所有项目共用一个 vault，个人偏好、跨项目的踩坑经验存一份就够，不用在每个仓库里各存一遍。跨设备同步也不用另起炉灶——Obsidian Sync（付费）或者自己用 Syncthing 同步这个 vault 目录都行。
+
+代价：Local REST API 要求 Obsidian 保持打开、插件保持启用，比纯文件读写多一层依赖；这套 MCP server 是社区维护，不是 Anthropic 或 Obsidian 官方出品，稳定性和更新节奏得自己承担；同样没有语义检索，纯靠关键词和你自己组织的文件夹、标签结构。
+
+两条思路都没有绕开本文一开始讲的原理，只是把「读写工具」换成了你已经每天在用的东西，省去专门运维一个记忆系统的成本，代价是检索能力停留在关键词层面。想清楚自己需不需要语义检索，比纠结用哪个存储后端更重要。
+
+至于具体的实践和操作步骤，请读者自行参考和研究摸索。
