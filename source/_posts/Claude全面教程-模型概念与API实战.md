@@ -1,7 +1,7 @@
 ---
 title: "Claude 全面教程：模型家族、核心概念与 API 实战（2026 年 7 月版）"
 date: 2026-07-06 15:00:00
-updated: 2026-07-07 11:00:00
+updated: 2026-07-10 10:00:00
 cover: /img/p25.jpg
 categories: tutorial
 tags:
@@ -244,7 +244,14 @@ system=[{
 > 官方定义（出自 Anthropic《Building effective agents》）：workflow 是**由预先编写的代码路径来编排** LLM 和工具的系统——执行哪些步骤、按什么顺序，由代码决定。
 
 说人话：有些任务每次流程完全一样，比如处理退款永远是"查订单 → 核金额 → 打款 → 发通知邮件"。这种就不需要助理自由发挥——你把四个步骤用代码写死，助理只在需要动脑的环节出场（比如把邮件写得客气点）。跑一百次就是同样四步，便宜、可控、不会跑偏。
-一句话：**Workflow 是"人定步骤，AI 干活"**。
+
+**这套"人定步骤"在 Claude Code 里有个具体实现，叫 dynamic workflow（动态工作流）**，2026 年 5 月底正式发布：
+
+> 官方定义（[Claude Code 文档](https://code.claude.com/docs/en/workflows)）：dynamic workflow 是一段由 Claude 编写、交给独立运行时在后台执行的 JavaScript 脚本，用 `agent()`、`parallel()`、`pipeline()` 等原语编排多个 subagent。决定"下一步跑什么"的是这段脚本本身，而不是 Claude 在对话里临场判断——这也是它和普通 subagent、skill 的核心区别：subagent 和 skill 是"Claude 一轮一轮自己决定派谁干活"，workflow 是"脚本说了算"。
+
+说人话：还是刚才退款流水线的思路，只是这次"写步骤的人"从工程师换成了 Claude 自己——你说清楚要审查的范围，Claude 现写一段脚本，把流程拆成几个阶段（比如"先派几个人从不同角度找问题 → 每条发现单独派一个人核实真假，找到多少核实多少 → 汇总去重出报告"）。脚本里可以带循环和分支：这次改动大就多派几个人，问题多就多核实几条，连续几轮都没找到新问题就停。步骤"数量"是灵活的，但"要不要再跑一轮"这个判断逻辑，还是写死在脚本里的固定规则，不是模型现场自由发挥——所以它依然是 workflow，不是 agent。一次能跑几十到上百个 subagent，比对话里一步步指挥快得多，但也更吃 token；跑之前 Claude Code 会先弹出确认框，列出计划的几个阶段，你可以选直接跑、以后这个项目里都不用再问、看一眼原始脚本，或者取消。
+
+一句话：**Workflow（包括能自适应轮数的 dynamic workflow）都是"人定步骤，AI 干活"**。
 
 **Agent：只给目标、不给步骤的委托**
 
@@ -325,7 +332,7 @@ my-project/
 
 这样规则只维护一份，换工具也不用重写。如果项目只用 Claude，直接写 CLAUDE.md 就够了，不需要 AGENTS.md。
 
-### 记忆：Claude 自己攒的笔记
+### 记忆(memory)：Claude 自己攒的笔记
 
 规则是你写的，记忆是它记的。三个入口各有一套：
 
