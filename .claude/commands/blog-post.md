@@ -68,11 +68,27 @@ sips -s format jpeg -s formatOptions 80 -Z 1920 source/img/pXX.jpg
 - 发现过时或有误 → 直接修正，在 Step 4 的总结里注明改了什么
 - 无法核实（无网络或文档找不到）→ 在内容里加注"建议以官方文档为准"或标注版本适用范围
 
-## Step 4：停止，等待审核
+## Step 4：起公网预览地址，停止等待审核
+
+**启动前先检查有没有残留的旧进程**（比如我之前手动起过、忘了关）：
+1. 检查端口 4000：`lsof -ti:4000`，有 PID 就 `kill` 掉，并告诉我"检测到旧的 hexo server 还在跑，已停止"
+2. 检查 Tailscale funnel 进程：`pgrep -fl "tailscale funnel"`（**不要用** `tailscale funnel status`——前台模式的 funnel 不会同步进这个状态查询，会显示"No serve config"，查不到实际在跑的进程）。macOS 上 Tailscale.app 的 CLI 是个包装脚本，会连带跑出父子两个进程（`/bin/sh .../tailscale` 和 `.../Tailscale.app/.../tailscale`），**pgrep 匹配到几个 PID 就全部 kill 掉，只杀一个可能留下孤儿进程继续占着公网暴露**。杀完告诉我"检测到旧的 Tailscale funnel 还在跑，已停止"
+
+**确认干净后再正常启动**：
+1. 后台启动本地预览：`hexo clean && hexo server`
+2. 用 Tailscale 前台模式代理到公网：`tailscale funnel 4000`（不加 `--bg`，配置跟这个进程绑在一起）
+3. 从输出里取到公网访问地址——中间命令的过程和原始输出不用展示，只要这个地址
 
 输出一段简短总结：
 - 文件路径
 - 文章结构（各章节标题）
 - 还有哪些可以扩展的方向（可选）
+- 公网预览地址：**单独一行只放这个 URL**，后面不要紧跟括号说明、文章路径或其他文字——URL 和后面的内容连在一起会被识别成同一个（打不开的）链接。补充说明（比如"手机可直接打开"）放在 URL 前面单独一句，或者另起一行，不要接在 URL 后面
 
-然后停下来，等我审核反馈。
+总结末尾问一句：审核完成后告诉我一声。
+
+然后停下来，等我审核反馈。收到"停掉"指令时，直接终止 `hexo server` 和 `tailscale funnel` 这两个进程即可——前台模式下进程退出会自动清掉公网暴露配置，不用额外跑 `off` 命令。
+
+我确认审核完成后：把这次要 commit 的内容（新文章 + 相关改动，比如同步更新过的地图页）整理成 commit message 发给我看，**先等我明确回复"OK"或确认无误，才执行 `git commit`**——不要自己生成完消息就直接 commit。
+
+commit 完之后，我说"发布"/"部署"/"上线"/"推送"这类词，按 CLAUDE.md 里的部署命令执行，不用重新调用这个 skill。
