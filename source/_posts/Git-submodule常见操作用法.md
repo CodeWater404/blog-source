@@ -172,8 +172,8 @@ git submodule update --init --recursive
 
 ## 总结
 
-- **`git submodule update`**：将子模块更新到主仓库所记录的特定提交，保持主仓库和子模块之间的引用一致。
-- **`git pull origin master`**：从远程仓库拉取最新的提交并合并到当前分支，可能导致子模块的状态与主仓库中的引用不一致。
+- `git submodule update`：将子模块更新到主仓库所记录的特定提交，保持主仓库和子模块之间的引用一致。
+- `git pull origin master`：从远程仓库拉取最新的提交并合并到当前分支，可能导致子模块的状态与主仓库中的引用不一致。
 
 ## 使用场景
 

@@ -126,8 +126,8 @@ Claude API 的核心端点只有一个：`POST /v1/messages`。它是**无状态
 
 一次请求由三部分组成：
 
-- **`system`**：系统提示，定义模型的角色、行为边界和输出风格，权威高于用户消息;
-- **`messages`**：`user` 和 `assistant` 角色交替的消息数组，第一条必须是 `user`;
+- `system`：系统提示，定义模型的角色、行为边界和输出风格，权威高于用户消息;
+- `messages`：`user` 和 `assistant` 角色交替的消息数组，第一条必须是 `user`;
 - **参数**：`model`、`max_tokens`（必填，输出 token 上限）、`thinking` 等。
 
 多轮对话就是把上一轮的回复追加进 `messages` 再发一次：
