@@ -85,4 +85,5 @@ hexo clean && hexo g -d
   date: YYYY-MM-DD HH:MM:SS      # 原始发布时间，不动
   updated: YYYY-MM-DD HH:MM:SS   # 本次修改日期
   ```
+- **`date`/`updated` 字段必须先跑 `date "+%Y-%m-%d %H:%M:%S"` 拿真实系统时间再填，不要凭感觉编时间**——曾经多次把时间写错，跟实际相差好几个小时
 - 文章中的代码示例优先用 Go 编写；只有在 Go 不适合（如前端、脚本场景）时才选其他语言

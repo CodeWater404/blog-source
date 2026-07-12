@@ -37,6 +37,7 @@ sips -s format jpeg -s formatOptions 80 -Z 1920 source/img/pXX.jpg
 按照计划写出完整文章，遵守以下约定：
 - 文件保存到 `source/_posts/` 下，文件名用中文或英文均可
 - frontmatter 必须包含 title、date、categories、tags、description 字段
+- **`date`（以及后续任何修改时要加的 `updated`）字段必须先跑 `date "+%Y-%m-%d %H:%M:%S"` 拿真实系统时间再填，不要凭感觉编时间**——历史上多次把 `updated` 写成瞎猜的时间，跟实际相差好几个小时
 - 加上 `<!-- more -->` 分隔摘要
 - 开头直接进入内容，不写"本文将介绍……"类的声明
 - 章节标题要传递信息（不用"简介""背景""总结"这类空标题）
