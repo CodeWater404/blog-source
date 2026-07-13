@@ -1,6 +1,7 @@
 ---
 title: "xargs、管道与 Linux 命令设计哲学：为什么 find | rm 删不掉任何文件"
 date: 2026-07-12 16:52:33
+updated: 2026-07-14 00:35:18
 cover: /img/p36.jpg
 categories: tools
 tags:
@@ -72,6 +73,12 @@ find . -name "*.log" | xargs -I {} mv {} /backup/
 find . -name "*.log" -print0 | xargs -0 rm
 #     -0：配合 find 的 -print0 使用，用 null 字符分隔文件名而不是空格/换行
 #     这个组合专门解决文件名里带空格的问题，前两篇 grep 和 find 文章里都提到过它
+
+lsof -ti:4000 | xargs -r kill
+#     -r：stdin 完全没有内容时，不执行后面的命令
+#     没有这个参数，GNU xargs 默认哪怕 stdin 是空的也会执行一次命令——
+#     这里如果端口 4000 没有进程占用，lsof 不会输出任何内容，
+#     不加 -r 的话 xargs 还是会尝试跑一次不带参数的 kill，报一句用法错误；加了 -r 就直接跳过，什么都不做
 ```
 
 ## xargs -P：容易被忽略的并行执行
@@ -93,6 +100,7 @@ find . -name "*.jpg" | xargs -P 4 -n 1 convert -resize 50%
 | `-n NUM` | 每次调用命令时最多传 NUM 个参数，不写则尽量一次塞满（受 `ARG_MAX` 限制） |
 | `-I REPLACE` | 自定义占位符，可以把参数插到命令中间而不是只能接在最后 |
 | `-0` | 用 null 字符分隔输入项，配合 `find -print0` 处理带空格的文件名 |
+| `-r` | stdin 为空时不执行命令，避免 GNU xargs 默认"哪怕没输入也跑一次"的行为 |
 | `-P NUM` | 最多同时跑 NUM 个进程，默认是 1（串行）；必须配合 `-n` 才能真正并行 |
 | `-t` | 执行前先把实际要跑的命令打印出来，调试危险操作时先加这个看一眼 |
 | `-p` | 每次执行前都询问确认，比 `-t` 更保守，确认了才真正执行 |
