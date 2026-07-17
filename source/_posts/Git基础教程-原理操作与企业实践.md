@@ -1,6 +1,7 @@
 ---
 title: "Git 基础教程：原理、常见操作与企业实践规范"
 date: 2026-07-05 10:00:00
+updated: 2026-07-17 16:14:35
 cover: /img/p23.jpg
 categories: git
 tags:
@@ -101,6 +102,35 @@ git diff --staged
 # 查看提交历史（图形化显示分支关系）
 git log --oneline --graph --all
 ```
+
+### 查看历史与追溯：谁改的、什么时候改的
+
+排查"这段代码为什么长这样"时的三件套——看文件的修改历史、看某一行是谁改的、看某次提交到底改了什么：
+
+```bash
+# 查看某个文件的历史修改记录
+git log --oneline src/main.go
+#     只列出改过这个文件的提交，一行一条
+
+git log -p src/main.go
+#     -p：每条提交连带显示这个文件的具体 diff，改了什么一目了然
+
+# 查看某一行（或某几行）是谁在哪次提交里改的
+git blame src/main.go
+#     逐行标注最后一次修改这一行的提交、作者和时间
+
+git blame -L 10,20 src/main.go
+#     -L：只看第 10 到 20 行，文件很长时不用翻
+
+# 查看某个 commit 的完整内容
+git show abc1234
+#     显示这次提交的说明、作者、时间和完整 diff——
+#     从 blame 或 log 里拿到可疑的 commit 哈希后，用它看细节
+```
+
+三个命令正好串成一条排查链：`git log 文件` 找到相关提交 → `git blame` 定位到具体某一行是哪次提交改的 → `git show` 看那次提交的完整改动和说明。
+
+> 更进一步——想看某个函数或某段代码块（而不是整个文件）的完整历史，用 `git log -L`，踩坑细节见：[Git: 查看指定代码块的历史记录](/Git-view-the-history-of-the-specified-code-block)
 
 ### add 和 commit
 
@@ -220,6 +250,9 @@ git stash show stash@{0} -p
 # 撤销工作区的修改（恢复到上次 commit 的状态，改动丢失）
 git restore src/main.go
 
+# 交互式部分还原：逐块询问，选择性地撤销文件里的一部分修改
+git restore -p src/main.go
+
 # 把文件从暂存区移回工作区（取消 add）
 git restore --staged src/main.go
 
@@ -240,6 +273,19 @@ git revert abc1234
 ```
 
 `reset --hard` 会直接丢弃工作区改动，执行前确认好。已经 push 的提交用 `revert` 更安全，它不改历史，而是新增一个撤销的 commit。
+
+`restore -p` 单独展开讲一下，它解决的是一个很常见的场景：一个文件里混着有效修改和无效修改——比如改了几行逻辑，编辑器顺手又格式化出一堆空格变动、删掉的空行，`git diff` 一看满屏噪音。整个文件 `restore` 会把有效修改一起丢掉，手动改回去又太费劲。`-p`（patch）模式会把文件的改动拆成一个个块（hunk），逐块展示 diff 并询问怎么处理：
+
+```bash
+git restore -p src/main.go
+#     对每一块改动，git 会显示 diff 并问 Discard this hunk from worktree?
+#     y：还原这一块（丢弃这块改动）
+#     n：保留这一块，看下一块
+#     s：这一块太大，拆成更小的块再逐个问
+#     q：退出，后面的块全部保留
+```
+
+遇到"空格、空行这类无效修改混在有效修改里"的情况，逐块 y/n 过一遍，噪音全清掉、有效改动一行不丢。同样的 `-p` 参数在 `git add -p` 上也能用，方向反过来——从混杂的改动里挑出想提交的部分。
 
 ---
 
@@ -462,6 +508,18 @@ git commit
 ```
 
 如果冲突太复杂，可以用 `git mergetool` 调出可视化合并工具（需要先配置）。
+
+改到一半发现冲突超出预期、想放弃这次合并重新来过，不用手动去删那些冲突标记——直接取消合并，回到合并前的状态：
+
+```bash
+git merge --abort
+#     取消这次合并，工作区恢复到 merge 之前的样子，就像什么都没发生过
+
+git rebase --abort
+#     变基过程中遇到冲突想放弃，对应的取消命令是这个
+```
+
+注意前提：合并前的工作区应该是干净的（没有未提交的改动）——这也是为什么合并前先 commit 或 stash 是个好习惯，否则 `--abort` 恢复现场时可能没法完整还原你未提交的那部分内容。
 
 ### 修改最近一次 commit
 
