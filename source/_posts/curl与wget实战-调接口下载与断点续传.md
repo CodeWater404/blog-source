@@ -1,6 +1,7 @@
 ---
 title: "curl 与 wget 实战：调接口、下载文件与断点续传"
 date: 2026-07-14 14:16:45
+updated: 2026-07-18 16:44:36
 cover: /img/p48.jpg
 categories: tools
 tags:
@@ -70,6 +71,21 @@ curl -O https://example.com/download/app-v2.tar.gz
 
 偶尔下载一两个文件，`curl -O` 够用；但要断点续传、批量下载，就该换 `wget` 了。
 
+## curl -sSL | sh：装软件时最常见的组合
+
+很多开源工具的官方安装方式都是这个模式——curl 拉下安装脚本，直接通过管道交给 shell 执行：
+
+```bash
+curl -sSL https://example.com/install.sh | sh
+#     -s：silent，关掉进度条和统计信息——脚本内容要进管道，进度条会污染输出
+#     -S：show-error，配合 -s 使用——静默模式下如果请求失败，仍然把错误信息打出来
+#         只用 -s 的话连报错都吞掉，下载失败了管道那头收到空内容，莫名其妙
+#     -L：跟随重定向——GitHub raw、安装脚本短链这类地址几乎都有跳转，不加拿到的是空响应
+#     | sh：把下载到的脚本内容直接交给 shell 执行，一步完成"下载+安装"
+```
+
+`-sSL` 三个参数几乎总是绑在一起出现，可以当成固定搭配记。另外提醒一句：这个模式等于"把远程内容直接交给 shell 执行"，只对信任的官方源用；对来路不明的脚本，先把 `| sh` 去掉，把内容下载下来看一眼再决定跑不跑。
+
 ## wget 的默认行为：直接存成文件
 
 `wget` 和 `curl` 的默认行为正相反：不带参数就把 URL 内容保存成本地文件（文件名取自 URL），从设计上就是给"下载"这个场景准备的。macOS 自带 `curl` 但不自带 `wget`，需要 `brew install wget`：
@@ -104,15 +120,22 @@ wget -r --no-parent https://example.com/docs/
 | `curl URL` | 发 GET，响应体打印到终端 |
 | `curl -I` | 只看响应头（HEAD 请求） |
 | `curl -v` | 显示完整请求/响应过程，调试用 |
-| `curl -H -d` | 加请求头、发请求体（-d 自动切 POST） |
+| `curl -X 方法` | 指定请求方法（POST/PUT/DELETE 等） |
+| `curl -H "头: 值"` | 添加请求头，可写多次 |
+| `curl -d '数据'` | 发送请求体，同时自动把方法切成 POST |
 | `curl -L` | 跟随重定向，默认不跟随 |
 | `curl --max-time N` | 整个请求的超时上限（秒） |
-| `curl -o 文件` / `-O` | 保存为指定文件名 / 用远端文件名 |
+| `curl -o 文件` | 响应体保存为指定文件名 |
+| `curl -O` | 响应体保存为远端 URL 里的文件名 |
+| `curl -s` | 静默模式，关掉进度条和统计信息 |
+| `curl -S` | 配合 `-s`：静默但请求失败时仍显示错误 |
+| `curl -sSL url \| sh` | 安装脚本固定搭配：以上三个参数连用 + 管道执行 |
 | `curl -w "%{http_code}"` | 输出状态码等元信息 |
 | `wget URL` | 下载保存为文件（默认行为） |
 | `wget -c` | 断点续传 |
 | `wget -P 目录` | 指定保存目录 |
-| `wget -r --no-parent` | 递归下载，限制不爬上层 |
+| `wget -r` | 递归下载，把页面里链接的资源一并抓下来 |
+| `wget --no-parent` | 配合 `-r`：不向上层目录爬，限制递归范围 |
 
 ## 写到这里
 
