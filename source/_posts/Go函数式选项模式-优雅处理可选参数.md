@@ -1,6 +1,7 @@
 ---
 title: "Go 函数式选项模式：优雅处理构造函数的可选参数"
 date: 2026-07-21 00:28:39
+updated: 2026-07-22 11:43:58
 cover: /img/p58.jpg
 categories: golang
 tags:

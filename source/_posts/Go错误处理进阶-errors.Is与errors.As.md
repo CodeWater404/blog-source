@@ -1,6 +1,7 @@
 ---
 title: "Go 错误处理进阶：errors.Is、errors.As 与错误包装"
 date: 2026-07-21 00:28:39
+updated: 2026-07-22 11:43:58
 cover: /img/p59.jpg
 categories: golang
 tags:
