@@ -1,6 +1,7 @@
 ---
 title: "从零开始用 Neovim：LazyVim 让配置不再是障碍"
 date: 2026-07-03 18:00:00
+updated: 2026-08-31 20:05:45
 cover: /img/p21.jpg
 categories: tools
 tags:
@@ -193,6 +194,8 @@ K       悬浮显示文档（hover doc）
 Space + c + a   代码操作（code action，如自动 import）
 Space + c + r   重命名符号
 ```
+
+`gd` 跳过去之后想跳回来，按 `Ctrl-o` 就行——这是 vim 自带的跳转列表机制，不是 LazyVim 专门配的，具体原理见 [vim 基本操作](/vim基本操作-模式切换到保存退出)"常见操作场景"一节。
 
 ### 多窗口
 
