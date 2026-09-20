@@ -1,7 +1,7 @@
 ---
 title: "从零开始用 Neovim：LazyVim 让配置不再是障碍"
 date: 2026-07-03 18:00:00
-updated: 2026-08-31 20:05:45
+updated: 2026-09-20 22:20:26
 cover: /img/p21.jpg
 categories: tools
 tags:
@@ -70,7 +70,7 @@ LazyVim 依赖几个外部工具，系列前几篇已经装过其中大部分：
 
 ```bash
 brew install git ripgrep fd lazygit
-# ripgrep、fd：Telescope 文件搜索用
+# ripgrep、fd：文件名和内容搜索用
 # lazygit：内置 Git TUI 集成
 ```
 
@@ -169,10 +169,21 @@ LazyVim 在 Vim 基础键位上层叠了一套以 `Space` 为 leader 键的快�
 
 ```
 Space + e       打开/关闭文件树（neo-tree）
-Space + f + f   模糊搜索文件名（Telescope）
-Space + f + g   搜索文件内容（ripgrep）
-Space + f + r   最近打开的文件
+Space + f + f   模糊搜索文件名，范围是项目根目录
+Space + f + F   同上，但范围是当前工作目录（cwd）
+Space + f + g   只在 git 跟踪的文件里找文件名
+Space + f + r   最近打开过的文件，所有目录都算
+Space + f + R   最近打开过的文件，只算当前工作目录下的
+Space + s + g   搜索文件内容（ripgrep），范围是项目根目录
+Space + s + G   同上，但范围是当前工作目录
 ```
+
+这里的"项目根目录"和"当前工作目录"不是一回事：
+
+1. 当前工作目录（cwd）：你在终端里执行 `nvim` 时所在的目录，在 Neovim 里用 `:pwd` 可以看到。
+2. 项目根目录：LazyVim 按这个顺序找，找到哪个用哪个：当前文件所属 LSP 的工作区根目录 → 往上找到的第一个含 `.git` 或 `lua` 的目录 → 都没有就退回 cwd。
+
+比如在项目的 `src/handler/` 目录下启动 `nvim`，`Space f f` 搜的是整个仓库，`Space f F` 只搜 `src/handler/` 下面。
 
 在文件树里：
 
@@ -219,7 +230,7 @@ Space + g + b   查看当前行的 git blame
 | 操作 | 快捷键 |
 |------|--------|
 | 查找文件 | `Space f f` |
-| 搜索内容 | `Space f g` |
+| 搜索内容 | `Space s g` |
 | 文件树 | `Space e` |
 | 关闭当前 buffer | `Space b d` |
 | 格式化文件 | `Space c f` |
