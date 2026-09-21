@@ -1,7 +1,7 @@
 ---
 title: "Git 基础教程：原理、常见操作与企业实践规范"
 date: 2026-07-05 10:00:00
-updated: 2026-07-17 16:14:35
+updated: 2026-09-21 20:54:33
 cover: /img/p23.jpg
 categories: git
 tags:
@@ -175,6 +175,36 @@ git branch -d feature/login
 # 删除远端分支
 git push origin --delete feature/login
 ```
+
+### 切分支为什么用 switch：checkout 的歧义
+
+`git checkout` 是个身兼多职的老命令：既能切换分支，又能把文件恢复成暂存区的版本（丢弃改动）。参数只写一个名字时，Git 得自己判断这个名字指的是分支还是路径。大多数时候没有歧义，一旦两者重名就会卡住。
+
+一个真实遇到的例子：仓库根目录下有个 `test/` 目录，本地还没有 `test` 分支，只有远端的 `origin/test`：
+
+```bash
+git checkout test
+#     报错：fatal: 'test' 既可以是一个本地文件，也可以是一个跟踪分支。
+#           请使用 -- （和可选的 --no-guess）来消除歧义
+#     本地没有 test 分支时，Git 会尝试从 origin/test 创建一个，
+#     可 test 同时又是一个真实存在的路径，它不敢替你选：
+#     当成路径，意味着把 test/ 目录恢复成暂存区的版本；当成分支，是另一回事
+
+git switch test
+#     switch 的参数只会当成分支解释，不会去匹配路径
+#     本地没有 test 分支时，同样会自动从 origin/test 创建并设置跟踪
+```
+
+Git 2.23（2019 年 8 月）起把 `checkout` 拆成了两个各管一件事的命令：`switch` 只管分支，`restore` 只管恢复文件。日常写法的对应关系：
+
+| 想做的事 | 旧写法 | 新写法 |
+|---|---|---|
+| 切换到已有分支 | `git checkout main` | `git switch main` |
+| 新建并切换 | `git checkout -b feature/login` | `git switch -c feature/login` |
+| 回到上一个分支 | `git checkout -` | `git switch -` |
+| 丢弃文件的改动 | `git checkout -- a.go` | `git restore a.go` |
+
+`checkout` 没有被废弃，老教程和老脚本里的写法照样能用。自己在本机手动切分支，优先用 `switch`；如果命令要写进脚本，或者要在版本可能低于 2.23 的机器上运行（老的 CI 镜像、服务器），继续用 `checkout`，遇到重名时按报错提示加上 `--`。
 
 ### 合并和变基
 
