@@ -1,7 +1,7 @@
 ---
 title: "从零开始用 Neovim：LazyVim 让配置不再是障碍"
 date: 2026-07-03 18:00:00
-updated: 2026-09-21 19:24:20
+updated: 2026-09-21 19:34:00
 cover: /img/p21.jpg
 categories: tools
 tags:
@@ -214,7 +214,11 @@ Space + c + r   重命名符号
 Space + |   垂直分割窗口
 Space + -   水平分割窗口
 Ctrl+h/j/k/l    在分割窗口间移动
+Space + w + d   关闭当前窗口，只关光标所在的这一个，其他窗口不动
+Ctrl+w + o      只保留当前窗口，关掉其他所有分割
 ```
+
+不小心多分出一个窗口，先用 `Ctrl+h/j/k/l` 把光标移进去，再按 `Space w d` 关掉。它就是 vim 原生的 `Ctrl-w c`。
 
 ### 会话：退出后接着上次的工作继续
 
@@ -265,6 +269,7 @@ vim 自带的 `f`/`t` 只能在当前这一行里跳（见 [vim 基本操作](/v
 | 搜索内容 | `Space s g` |
 | 文件树 | `Space e` |
 | 关闭当前 buffer | `Space b d` |
+| 关闭当前窗口（分割出来的） | `Space w d` |
 | 格式化文件 | `Space c f` |
 | 跳到屏幕上任意位置 | `s` |
 | 跳到定义 | `gd` |
