@@ -1,7 +1,7 @@
 ---
 title: "从零开始用 Neovim：LazyVim 让配置不再是障碍"
 date: 2026-07-03 18:00:00
-updated: 2026-09-20 22:30:32
+updated: 2026-09-21 19:24:20
 cover: /img/p21.jpg
 categories: tools
 tags:
@@ -215,6 +215,27 @@ Space + |   垂直分割窗口
 Space + -   水平分割窗口
 Ctrl+h/j/k/l    在分割窗口间移动
 ```
+
+### 会话：退出后接着上次的工作继续
+
+[persistence.nvim](https://github.com/folke/persistence.nvim) 是 LazyVim 自带的会话管理插件。默认行为是：你退出 nvim 时，它自动把当前目录的窗口布局、打开的文件存成一个会话文件；下次需要时，一个快捷键恢复。底层用的就是 vim 原生的 `:mksession`，原理见 [vim 基本操作](/vim基本操作-模式切换到保存退出)"常见操作场景"一节。
+
+```
+Space + q + s   恢复当前目录的会话
+Space + q + l   恢复最近一次保存的会话，不限目录
+Space + q + S   弹出列表，选一个目录的会话恢复
+Space + q + d   这次退出时不保存会话（之前存过的旧会话不会被删）
+Space + q + q   退出全部窗口，等于 :qa
+```
+
+`Space q` 这一组在 which-key 里叫 `quit/session`，退出和会话都归它管，所以 `Space q q` 也在里面。不带文件启动 `nvim` 时，仪表盘上的 `s`（Restore Session）等价于 `Space q s`。
+
+会话是这样存的：
+
+1. 触发时机：退出 nvim 时自动保存，不需要手动操作。前提是至少打开了一个真实文件，只有空缓冲区、git commit 编辑窗口这类不会存。
+2. 存放位置：`~/.local/state/nvim/sessions/`，文件名是工作目录把 `/` 换成 `%`，比如 `%Users%me%code%api.vim`。每个目录一份。
+3. 按 git 分支区分：在 `main`、`master` 以外的分支上，文件名末尾会多一段分支名，每个分支各存一份。这个分支还没存过会话时，`Space q s` 会退回去用不带分支名的那份。
+4. 存的内容：LazyVim 配置的 `sessionoptions` 包括打开的文件、窗口和标签页的布局与大小、工作目录、折叠状态等，只存文件路径，不存文件内容。
 
 ### Git 集成
 
