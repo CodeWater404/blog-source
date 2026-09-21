@@ -1,7 +1,7 @@
 ---
 title: "Git 基础教程：原理、常见操作与企业实践规范"
 date: 2026-07-05 10:00:00
-updated: 2026-09-21 20:54:33
+updated: 2026-09-21 21:34:16
 cover: /img/p23.jpg
 categories: git
 tags:
@@ -608,3 +608,19 @@ git cherry-pick abc1234^..def5678
 ```
 
 场景：hotfix 在 main 分支修复了一个 bug，需要把这个修复也应用到正在维护的 release 分支，用 cherry-pick 比重新写一遍高效。
+
+### 提交里带了构建产物：git show 和提交预览变得很卡
+
+> 在 Neovim 里翻 Git Log 时的具体表现和原因见：[从零开始用 Neovim：LazyVim 让配置不再是障碍](/neovim-lazyvim-终端编辑器)"Git Log 预览卡顿"一节。
+
+`git show`、`git log -p`，或者编辑器、lazygit 里的提交预览，遇到个别提交突然变得很慢，多半是这个提交把构建产物也提交了（比如 `dist/` 下压缩后的 JS）。压缩后的文件单行能有几百 KB，文件名还带内容哈希、每次构建都换名，git 眼里就是"删掉整个旧文件、新增整个新文件"，一个提交的 diff 动辄 2~3MB，真正的代码改动却只有十几 KB。
+
+让 git 不再展开这类文件的 diff，在仓库的 `.git/info/attributes` 里加一行：
+
+```
+web/dist/** -diff
+#   web/dist/**：匹配 web/dist 目录下的所有文件
+#   -diff：关掉 diff 属性，diff 时当二进制处理，只输出一行 "Binary files ... differ"
+```
+
+这个文件在 `.git/` 目录里，不属于任何提交，只影响本机，不会被推送，也不改动仓库里存的内容；同一个提交里其他文件的 diff 照常显示。想撤销，删掉那一行即可。
