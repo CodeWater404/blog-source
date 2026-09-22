@@ -1,6 +1,7 @@
 ---
 title: "Mac 常用快捷键"
 date: 2026-09-14 19:41:00
+updated: 2026-09-22 22:10:07
 categories: tools
 tags:
   - Mac
@@ -79,3 +80,5 @@ Mac 键盘上找不到 Home、End、Page Up、Page Down 这几个键，但功能
    - `HDR`（高动态范围）：用 HEVC 编码，画面亮部和暗部的细节、色彩都保留得更多，但只有支持 HDR 的屏幕和播放器才能显示出这个效果，普通屏幕上跟 SDR 看不出明显差别，文件也更大
 3. `Command + Control + Esc`：停止当前的屏幕录制
 4. `Control + Command + N`：在 QuickTime Player 里直接新建屏幕录制，不用先点菜单
+5. 录 iPhone 操作素材：数据线连上 Mac，QuickTime Player 里「文件 → 新建影片录制」，点录制按钮旁边的小箭头，摄像头选成 iPhone，直接录的就是手机屏幕——不用先无线投屏到 Mac，再录一遍 Mac 屏幕，画质也不会经过投屏这一道压缩
+6. 录像里点开分享菜单会冒出一整排头像（Siri 猜的常联系人），录屏时暴露隐私。iPhone 设置 →「Apple 智能与 Siri」（不支持 Apple Intelligence 的机型里叫「Siri 与搜索」）→ 关掉「分享时显示」，这排联系人推荐就不再出现。注意这只关掉联系人这一部分，分享菜单里 App 图标那一整行还在
