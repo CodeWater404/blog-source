@@ -1,7 +1,7 @@
 ---
 title: "Git 基础教程：原理、常见操作与企业实践规范"
 date: 2026-07-05 10:00:00
-updated: 2026-09-21 21:34:16
+updated: 2026-10-03 00:42:22
 cover: /img/p23.jpg
 categories: git
 tags:
@@ -93,7 +93,7 @@ git clone -b main --single-branch https://github.com/user/repo.git
 # 查看工作区和暂存区的状态
 git status
 
-# 查看工作区 vs 暂存区的差异（还没 add 的改动）
+# 查看已跟踪文件里，工作区 vs 暂存区的差异（还没 add 的改动）
 git diff
 
 # 查看暂存区 vs 上次 commit 的差异（已 add 还没 commit 的改动）
@@ -101,6 +101,44 @@ git diff --staged
 
 # 查看提交历史（图形化显示分支关系）
 git log --oneline --graph --all
+```
+
+`git diff` 只会比较已经被 git 跟踪的文件：它按暂存区里登记的文件清单，逐个去看工作区里对应的文件有没有变化。新建的文件在 `git add` 之前不在暂存区里，`git status` 里显示为 `??`（未跟踪），`git diff` 不会输出它，哪怕它就在工作区里。想在 `git diff` 里看到新文件，有两种办法：
+
+```bash
+git add -N 新文件
+#         -N：intent to add，只在暂存区登记"我打算添加它"，不暂存内容，之后 git diff 会把整个文件显示成新增
+
+git add 新文件
+#         直接暂存，这时它的内容改看 git diff --staged
+```
+
+还有一种办法不用碰暂存区：`git diff --no-index` 直接比较磁盘上的两个文件，拿 `/dev/null`（空文件）当旧版本，新文件就整个显示成新增。
+
+```bash
+git diff --no-index /dev/null 新文件
+#        --no-index：不看暂存区，直接比较两个路径
+#        有差异时退出码是 1，写进脚本或 && 链里要留意
+```
+
+不过这个办法实用性有限：只看单个新文件，不如直接打开它；想一次看完所有未跟踪文件，又得敲一长串：
+
+```bash
+git ls-files --others --exclude-standard -z | xargs -0 -n1 git diff --no-index -- /dev/null
+#      ls-files --others：列出未跟踪的文件
+#      --exclude-standard：按 .gitignore 过滤，被忽略的文件不列出
+#      -z 和 xargs -0：用空字符分隔文件名，文件名含空格或中文也不会出错
+#      -n1：每个文件单独跑一次 git diff
+```
+
+经常需要这样看的话，可以设成别名，已跟踪文件的改动和未跟踪的新文件一次显示：
+
+```bash
+git config --global alias.diffall '!git diff; git ls-files --others --exclude-standard -z | xargs -0 -n1 git diff --no-index -- /dev/null || true'
+#          --global：写进用户级配置，所有仓库都能用
+#          alias.diffall：别名叫 diffall，设完之后直接敲 git diffall 就行
+#          开头的 !：告诉 git 这是一条 shell 命令，不是 git 子命令
+#          末尾的 || true：--no-index 有差异时退出码是 1，加上它让整条别名正常退出
 ```
 
 ### 查看历史与追溯：谁改的、什么时候改的
