@@ -229,11 +229,21 @@ related_post:
   orderby: random
   order: -1
 
-# 不蒜子访问统计
+# 不蒜子访问统计：接口经常超时，会让页面 load 事件迟迟不触发，已关闭
 busuanzi:
-  site_uv: true
-  site_pv: true
-  page_pv: true
+  site_uv: false
+  site_pv: false
+  page_pv: false
+
+# 懒加载：用浏览器原生 loading="lazy"，不额外加载 JS
+lazyload:
+  enable: true
+  native: true
+  field: site
+
+# 第三方库改用本地托管，依赖 hexo-butterfly-extjs 插件
+CDN:
+  third_party_provider: local
 
 # 404页面
 error_404:
